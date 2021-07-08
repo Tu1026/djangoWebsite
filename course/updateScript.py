@@ -13,12 +13,14 @@ import discord
 import datetime
 import gc
 
-def main(course, noti_email, url, registered):
+def main(course, noti_email, url, registered, username, password, TOKEN, uid):
+    course = str(course)
+    noti_email = str(noti_email)
+    url = str(url)
+    registered = str(registered)
     print("at least it's a start ")
     def send_discord_message(word):
-        TOKEN = os.getenv('DISCORD_TOKEN')
         client = discord.Client()
-        uid = int(os.getenv("uid"))
         @client.event
         async def on_ready():
             await client.get_channel(uid).send(f'Register for {word}RIGHT NOW!!!!!!!!!!!')
@@ -54,7 +56,7 @@ def main(course, noti_email, url, registered):
             try: 
                 text = soup.get_text()
                 text_list = text.split()
-                word_looking_for = "Registered:" + str(registered)
+                word_looking_for = "Registered:" + registered
                 t = datetime.datetime.today()
                 # if the amount of people registered has not changed keep looping
             except:
@@ -83,8 +85,6 @@ def main(course, noti_email, url, registered):
                     # log into server account to send message
                     # config = ConfigParser()
                     # config.read('config.ini')
-                    username = os.getenv("username1")
-                    password = os.getenv("password")
                     # username = config.get("email", "username")
                     # password = config.get("email", "password")
                     # send_fb_message("register for " + course + "NOWWWWWWW")
