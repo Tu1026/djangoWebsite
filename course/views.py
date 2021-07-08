@@ -11,6 +11,7 @@ def course(request):
 			course = form.save(commit=False)
 			course.user = request.user
 			course.save()
+			form.course_reg(form.cleaned_data.get("name"), request.user.email,form.cleaned_data.get("url"),form.cleaned_data.get("seats"))
 			messages.success(request, 'Course has been added and we will beging tracking!')
 			return redirect("main-home")
 	else:

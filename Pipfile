@@ -8,6 +8,9 @@ django = "*"
 django-crispy-forms = "*"
 pillow = "*"
 celery = "*"
+redis = "*"
+discord = "*"
+bs4 = "*"
 
 [dev-packages]
 pylint = "*"
