@@ -8,7 +8,6 @@ from bs4 import BeautifulSoup
 import time
 from urllib.request import urlopen
 import smtplib
-import os
 import discord
 import datetime
 import gc
