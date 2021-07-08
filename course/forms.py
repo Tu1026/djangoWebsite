@@ -8,8 +8,6 @@ class CourseRegForm(ModelForm):
 		exclude=['user']
   
 	def course_reg(self, course, email, url, number):
-        # try to trick spammers by checking whether the honeypot field is
-        # filled in; not super complicated/effective but it works
 		print(course, email, url, number)
 		id = course_reg_task.delay(
       	course, email, url, number)
