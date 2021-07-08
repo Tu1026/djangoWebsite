@@ -39,16 +39,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'course.apps.CourseConfig',
-    'django_extensions'
+    'course.apps.CourseConfig'
 ]
 
-# if DEBUG:
-#     INSTALLED_APPS.append(
-#         [
-#             "shell_plus"   
-#         ] 
-#     )
+if DEBUG:
+    INSTALLED_APPS.append(
+        [
+            'django_extensions'  
+        ] 
+    )
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
