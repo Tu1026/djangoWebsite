@@ -36,8 +36,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'course.apps.CourseConfig'
+    'course.apps.CourseConfig',
+    'django_extensions'
 ]
+
+# if DEBUG:
+#     INSTALLED_APPS.append(
+#         [
+#             "shell_plus"   
+#         ] 
+#     )
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -144,3 +152,5 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'America/Vancouver'
 
 TIME_ZONE = "America/Vancouver"
+
+CELERY_TASK_ALWAYS_EAGER  = True

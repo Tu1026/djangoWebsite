@@ -14,10 +14,11 @@ import datetime
 import gc
 
 def main(course, noti_email, url, registered):
+    print("at least it's a start ")
     def send_discord_message(word):
         TOKEN = os.getenv('DISCORD_TOKEN')
         client = discord.Client()
-        uid = os.getenv("uid")
+        uid = int(os.getenv("uid"))
         @client.event
         async def on_ready():
             await client.get_channel(uid).send(f'Register for {word}RIGHT NOW!!!!!!!!!!!')
@@ -53,7 +54,7 @@ def main(course, noti_email, url, registered):
             try: 
                 text = soup.get_text()
                 text_list = text.split()
-                word_looking_for = "Registered:" + registered
+                word_looking_for = "Registered:" + str(registered)
                 t = datetime.datetime.today()
                 # if the amount of people registered has not changed keep looping
             except:
@@ -95,17 +96,16 @@ def main(course, noti_email, url, registered):
                 break
 
     #get information from user
-    course = input("what course are you looking for?")
-    noti_email = input("what is your email that you want to get notificaition at?")
-    url = input("What is the 'section' specific url that you want to get in" +
-    "(ex: https://courses.students.ubc.ca/cs/courseschedule?pname=subjarea&tname=subj-section&dept=BIOL&course=234&section=921)?")
-    registered = input("How many people are registered in this section so far(only enter number ex: 100)?")
     html = urlopen(url).read()
     soup = BeautifulSoup(html, "html.parser")
     update_loop()
 
-
-
+# if __name__ == "__main__":
+#     course = input("course")
+#     noti_email = input("email")
+#     url = input('url')
+#     registered = input('250')
+#     main(course, noti_email, url, registered)
 
 
 
