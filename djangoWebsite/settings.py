@@ -20,8 +20,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY= os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG") == "True"
-
+DEBUG = os.getenv("dev") == "True"
+print(DEBUG)
 if DEBUG:
     ALLOWED_HOSTS = [ ]
 else:
@@ -43,7 +43,7 @@ INSTALLED_APPS = [
 ]
 
 if DEBUG:
-    INSTALLED_APPS.append(
+    INSTALLED_APPS.extend(
         [
             'django_extensions'  
         ] 
@@ -166,4 +166,4 @@ CELERY_TIMEZONE = 'America/Vancouver'
 
 TIME_ZONE = "America/Vancouver"
 
-CELERY_TASK_ALWAYS_EAGER  = True
+# CELERY_TASK_ALWAYS_EAGER  = True

@@ -127,7 +127,13 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+<<<<<<< HEAD
 
+=======
+0*.py
+
+#migrations
+>>>>>>> 8bf6e4e1367374198abec3fb90132639c000e8e6
 **/migrations/**
 !**/migrations
 !**/migrations/__init__.py
