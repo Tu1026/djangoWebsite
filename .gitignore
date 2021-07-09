@@ -128,3 +128,8 @@ dmypy.json
 # Pyre type checker
 .pyre/
 0*.py
+
+#migrations
+**/migrations/**
+!**/migrations
+!**/migrations/__init__.py
