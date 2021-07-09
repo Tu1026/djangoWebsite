@@ -25,7 +25,7 @@ DEBUG = os.getenv("DEBUG") == "True"
 if DEBUG:
     ALLOWED_HOSTS = [ ]
 else:
-    ALLOWED_HOSTS = ["159.89.120.69"]
+    ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -94,8 +94,8 @@ else:
     DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'djangoWebsite',
-        'USER': 'djangoWebsiteUser',
+        'NAME': 'djangowebsite',
+        'USER': 'djangowebsiteuser',
         'PASSWORD': os.getenv("SQLpassword"),
         'HOST': 'localhost',
         'PORT': '',
@@ -157,7 +157,7 @@ LOGIN_REDIRECT_URL = 'main-home'
 LOGIN_URL = 'login'
 
 # CELERY STUFF
-BROKER_URL = 'redis://localhost:6379'
+CELERY_BROKER_URL = 'redis://localhost:6379'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'

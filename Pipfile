@@ -12,6 +12,7 @@ redis = "*"
 discord = "*"
 bs4 = "*"
 psycopg2-binary = "*"
+gunicorn = "*"
 
 [dev-packages]
 pylint = "*"
