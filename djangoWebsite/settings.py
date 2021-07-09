@@ -167,4 +167,4 @@ CELERY_TIMEZONE = 'America/Vancouver'
 
 TIME_ZONE = "America/Vancouver"
 
-CELERY_TASK_ALWAYS_EAGER  = True
+# CELERY_TASK_ALWAYS_EAGER  = True
