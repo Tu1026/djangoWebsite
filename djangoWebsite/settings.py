@@ -20,8 +20,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY= os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG") == "True"
-
+DEBUG = os.getenv("dev") == "True"
+print(DEBUG)
 if DEBUG:
     ALLOWED_HOSTS = [ ]
 else:
@@ -43,7 +43,7 @@ INSTALLED_APPS = [
 ]
 
 if DEBUG:
-    INSTALLED_APPS.append(
+    INSTALLED_APPS.extend(
         [
             'django_extensions'  
         ] 
@@ -157,7 +157,8 @@ LOGIN_REDIRECT_URL = 'main-home'
 LOGIN_URL = 'login'
 
 # CELERY STUFF
-BROKER_URL = 'redis://localhost:6379'
+
+CELERY_BROKER_URL = 'redis://localhost:6379'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
