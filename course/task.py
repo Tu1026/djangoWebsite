@@ -12,7 +12,7 @@ random_dogs = os.listdir(settings.MEDIA_ROOT)
 def course_reg_task(course, email, url, number):
     logger.info(f'Start tracking {course}')
     # using telnet to debug celery
-    rdb.set_trace()
+    #rdb.set_trace()
     username = os.getenv("username1")
     password = os.getenv("password")
     TOKEN = os.getenv('DISCORD_TOKEN')

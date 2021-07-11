@@ -17,16 +17,17 @@ def main(course, noti_email, url, registered, username, password, TOKEN, uid):
     noti_email = str(noti_email)
     url = str(url)
     registered = str(registered)
+    print(noti_email)
     print("at least it's a start ")
     def send_discord_message(word):
         client = discord.Client()
         @client.event
         async def on_ready():
-            await client.get_channel(uid).send(f'Register for {word}RIGHT NOW!!!!!!!!!!!')
-            await client.get_channel(uid).send(f'Register for {word}RIGHT NOW!!!!!!!!!!!')
-            await client.get_channel(uid).send(f'Register for {word}RIGHT NOW!!!!!!!!!!!')
-            await client.get_channel(uid).send(f'Register for {word}RIGHT NOW!!!!!!!!!!!')
-            await client.get_channel(uid).send(f'Register for {word}RIGHT NOW!!!!!!!!!!!')
+            await client.get_channel(uid).send(f'Register for {word} RIGHT NOW!!!!!!!!!!!')
+            await client.get_channel(uid).send(f'Register for {word} RIGHT NOW!!!!!!!!!!!')
+            await client.get_channel(uid).send(f'Register for {word} RIGHT NOW!!!!!!!!!!!')
+            await client.get_channel(uid).send(f'Register for {word} RIGHT NOW!!!!!!!!!!!')
+            await client.get_channel(uid).send(f'Register for {word} RIGHT NOW!!!!!!!!!!!')
             await client.close()
         
 
