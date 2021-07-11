@@ -29,6 +29,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
     path('course/', course_views.course, name='course'),
     path('', include('main.urls')),
+    path('captcha/', include('captcha.urls'))
 ]
 
 if settings.DEBUG:

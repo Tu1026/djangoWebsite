@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'course.apps.CourseConfig'
+    'course.apps.CourseConfig',
+    "captcha"
 ]
 
 if DEBUG:
