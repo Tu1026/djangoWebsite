@@ -1,3 +1,4 @@
+from django import forms
 from django.forms import ModelForm
 from .models import Course
 from .task import course_reg_task

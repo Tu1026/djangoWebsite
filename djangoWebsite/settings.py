@@ -23,7 +23,7 @@ SECRET_KEY= os.environ['SECRET_KEY']
 DEBUG = os.getenv("dev") == "True"
 print(DEBUG)
 if DEBUG:
-    ALLOWED_HOSTS = [ ]
+    ALLOWED_HOSTS = ["*"]
 else:
     ALLOWED_HOSTS = ["*"]
 

@@ -4,21 +4,39 @@
     , subscribe to the printed website to recieve notification
 """
 
-from bs4 import BeautifulSoup
 import time
-from urllib.request import urlopen
 import smtplib
 import discord
 import datetime
 import gc
+from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+import random
 
-def main(course, noti_email, url, registered, username, password, TOKEN, uid):
+
+def main(course, noti_email, url, seatType, username, password, TOKEN, uid):
+    print(username)
+    print(url)
     course = str(course)
     noti_email = str(noti_email)
     url = str(url)
-    registered = str(registered)
+    seatType = str(seatType)
     print(noti_email)
+    print(seatType)
     print("at least it's a start ")
+        
+    def process_seat_type():
+        if seatType == "general":
+            return "tr:nth-child(3) strong", "tr:nth-child(3) strong"
+        elif seatType == "restricted":
+            return "tr:nth-child(4) strong", "tr:nth-child(4) strong"
+        else:
+            return "tr:nth-child(3) strong", "tr:nth-child(4) strong"
+        
+    general_selector, restricted_selector, = process_seat_type()
+    
     def send_discord_message(word):
         client = discord.Client()
         @client.event
@@ -49,55 +67,64 @@ def main(course, noti_email, url, registered, username, password, TOKEN, uid):
         server.login(username, password)
         server.sendmail(sent_from, to, message)
         server.close()
+        
+    def maintnence_time():
+        t = datetime.datetime.today()
+        return t.hour >= 1 and t.hour <= 5
+    
+    def sleep_if_maintnence():
+        if maintnence_time():
+            time = datetime.datetime.today()
+            new_time = time.replace(hour=5, minute=30)
+            time.sleep((new_time - time).total_seconds())
+            print(f'sleeping right now till 4.20 AM for{new_time.total_seconds()} seconds to avoid scheduled maintenence')
+            t = datetime.datetime.today()
+            print(f'waking up at time {t}') 
 
+        
+    def get_css_element(driver):
+        driver.get(url)
+        return driver.find_element(By.CSS_SELECTOR, general_selector).text, driver.find_element(By.CSS_SELECTOR, restricted_selector).text
+    
+    def check_seat_status(general, restricted, driver):
+        driver.get(url)
+        general_new, restreicted_new = get_css_element(driver)
+        assert general_new == general
+        assert restreicted_new == restricted
+        return general_new, restreicted_new
+        
+    
     def update_loop():
     ## Keeps looping through the website until a spot is open
-        while True:
-            try: 
-                text = soup.get_text()
-                text_list = text.split()
-                word_looking_for = "Registered:" + registered
-                t = datetime.datetime.today()
-                # if the amount of people registered has not changed keep looping
-            except:
-                time.sleep(10) 
-                continue
-            
-            if word_looking_for in text_list:
-                # wait 10 seconds,
-                print(f"No seats avaliable yet updating in 10 seconds. Current time: {t.month}/{t.day} {t.hour}:{t.minute}:{t.second}")
-                time.sleep(10)
-                if t.hour >= 2 and t.hour <= 4:
-                    time_sleep = datetime.timedelta(hours=2, minutes=20)
-                    print(f'sleeping right now till 4.20 AM for{time_sleep.total_seconds()} seconds to avoid scheduled maintenence')
-                    time.sleep(time_sleep.total_seconds())
-                    t = datetime.datetime.today()
-                    print(f'waking up at time {t}') 
-                # continue with the script,
-                del text, text_list, word_looking_for, t
-                gc.collect()
-                continue
-                
-            # if the amout of people registered has changed do a pop up and send a notificaiton on the website
-            else:
-                # notify.send("register for " + course + " NOW")
+        options = Options()
+        options.headless = True
+        options.add_argument("--enable-javascript")
+        options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36")
+        restricted = 0
+        general = 0
+        with webdriver.Chrome(ChromeDriverManager().install(), options=options) as driver:
+            general, restricted = get_css_element(driver)               
+            while True:
                 try:
-                    # log into server account to send message
-                    # config = ConfigParser()
-                    # config.read('config.ini')
-                    # username = config.get("email", "username")
-                    # password = config.get("email", "password")
-                    # send_fb_message("register for " + course + "NOWWWWWWW")
-                    send_discord_message(course)
-                    send_email(username, password)
-                    print("email notificaiton sent")
+                    sleep_if_maintnence()
+                    print("still no seats available")
+                    general, restricted = check_seat_status(general, restricted, driver)
+                    gc.collect()
+                    print("sleeping to avoid bot detection")
+                    time.sleep(random.randint(20,40)) 
+                except AssertionError: 
+                    try:
+                        send_discord_message(course)
+                        send_email(username, password)
+                        print("email notificaiton sent")
+                    except:
+                        print("something went wrong with emailing stuff or FB stuff")
+                    break
                 except:
-                    print("something went wrong with emailing stuff or FB stuff")
-                break
-
-    #get information from user
-    html = urlopen(url).read()
-    soup = BeautifulSoup(html, "html.parser")
+                    time.sleep(random.randint(20,40)) 
+                    continue
+                
+    sleep_if_maintnence()
     update_loop()
 
 # if __name__ == "__main__":
