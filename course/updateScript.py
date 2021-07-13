@@ -25,7 +25,7 @@ def main(course, noti_email, url, seatType, username, password, TOKEN, uid):
     seatType = str(seatType)
     print(noti_email)
     print(seatType)
-    print("at least it's a start ")
+    print(f"Start Traking {course}")
         
     def process_seat_type():
         if seatType == "general":
@@ -87,11 +87,16 @@ def main(course, noti_email, url, seatType, username, password, TOKEN, uid):
         return driver.find_element(By.CSS_SELECTOR, general_selector).text, driver.find_element(By.CSS_SELECTOR, restricted_selector).text
     
     def check_seat_status(general, restricted, driver):
-        driver.get(url)
-        general_new, restreicted_new = get_css_element(driver)
-        assert general_new == general
-        assert restreicted_new == restricted
-        return general_new, restreicted_new
+        try:
+            driver.get(url)
+            general_new, restreicted_new = get_css_element(driver)
+            assert general_new == general
+            assert restreicted_new == restricted
+            return general_new, restreicted_new
+        except AssertionError:
+            raise AssertionError
+        except:
+            raise
         
     
     def update_loop():
@@ -103,26 +108,29 @@ def main(course, noti_email, url, seatType, username, password, TOKEN, uid):
         restricted = 0
         general = 0
         with webdriver.Chrome(ChromeDriverManager().install(), options=options) as driver:
-            general, restricted = get_css_element(driver)               
-            while True:
-                try:
-                    sleep_if_maintnence()
-                    print("still no seats available")
-                    general, restricted = check_seat_status(general, restricted, driver)
-                    gc.collect()
-                    print("sleeping to avoid bot detection")
-                    time.sleep(random.randint(20,40)) 
-                except AssertionError: 
+            try:
+                general, restricted = get_css_element(driver)
+                while True:
                     try:
-                        send_discord_message(course)
-                        send_email(username, password)
-                        print("email notificaiton sent")
+                        sleep_if_maintnence()
+                        print("still no seats available")
+                        general, restricted = check_seat_status(general, restricted, driver)
+                        gc.collect()
+                        print("sleeping to avoid bot detection")
+                        time.sleep(random.randint(20,40)) 
+                    except AssertionError: 
+                        try:
+                            send_discord_message(course)
+                            send_email(username, password)
+                            print("email notificaiton sent")
+                        except:
+                            print("something went wrong with emailing stuff or FB stuff")
+                        break
                     except:
-                        print("something went wrong with emailing stuff or FB stuff")
-                    break
-                except:
-                    time.sleep(random.randint(20,40)) 
-                    continue
+                        time.sleep(random.randint(20,40)) 
+                        continue
+            except:
+                send_discord_message(f'Something went wrong with {course}')
                 
     sleep_if_maintnence()
     update_loop()

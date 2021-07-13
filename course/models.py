@@ -8,7 +8,7 @@ class Course(models.Model):
 		("either", "Either")
 	]
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
-	url = models.URLField(verbose_name="URL of the desired course", max_length=200)
+	url = models.URLField(verbose_name="URL of the desired 'section' of the course", max_length=200)
 	name = models.CharField(verbose_name="What is the course code?", max_length=10)
 	seatType = models.CharField(max_length=20, default="either", choices=seatType_choices)
 

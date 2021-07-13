@@ -103,26 +103,29 @@ def main(course, noti_email, url, seatType, username, password, TOKEN, uid):
         restricted = 0
         general = 0
         with webdriver.Chrome(ChromeDriverManager().install(), options=options) as driver:
-            general, restricted = get_css_element(driver)               
-            while True:
-                try:
-                    sleep_if_maintnence()
-                    print("still no seats available")
-                    general, restricted = check_seat_status(general, restricted, driver)
-                    gc.collect()
-                    print("sleeping to avoid bot detection")
-                    time.sleep(random.randint(20,40)) 
-                except AssertionError: 
+            try:
+                general, restricted = get_css_element(driver)
+                while True:
                     try:
-                        send_discord_message(course)
-                        send_email(username, password)
-                        print("email notificaiton sent")
+                        sleep_if_maintnence()
+                        print("still no seats available")
+                        general, restricted = check_seat_status(general, restricted, driver)
+                        gc.collect()
+                        print("sleeping to avoid bot detection")
+                        time.sleep(random.randint(20,40)) 
+                    except AssertionError: 
+                        try:
+                            send_discord_message(course)
+                            send_email(username, password)
+                            print("email notificaiton sent")
+                        except:
+                            print("something went wrong with emailing stuff or FB stuff")
+                        break
                     except:
-                        print("something went wrong with emailing stuff or FB stuff")
-                    break
-                except:
-                    time.sleep(random.randint(20,40)) 
-                    continue
+                        time.sleep(random.randint(20,40)) 
+                        continue
+            except:
+                send_discord_message(f'Something went wrong with {course}')
                 
     sleep_if_maintnence()
     update_loop()
@@ -137,5 +140,5 @@ def main(course, noti_email, url, seatType, username, password, TOKEN, uid):
 
 
 
-main("TEST", "TEST@gmail.asd", "https://courses.students.ubc.ca/cs/courseschedule?pname=subjarea&tname=subj-section&dept=FNH&course=413&section=001", "either",
+main("TEST", "TEST@gmail.asd", "http://127.0.0.1:8000/", "either",
      "s413070707@gmail.com", "linshuantu1026", "NzM2MTE4ODk3MDAyMTUxOTM5.XxqKJQ.ppWu7x4AlHQpbJs8ZAA0mq_ezyE", "736117722894696450")
