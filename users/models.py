@@ -7,8 +7,9 @@ random_dogs = os.listdir(settings.MEDIA_ROOT)
 
 class Profile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
-	discord_id=models.CharField(verbose_name="discord_id", max_length=50)
+	discord_id=models.CharField(verbose_name="Discord_id (like this xxxx#1234)", max_length=50)
 	image = models.ImageField(default=random.choice(random_dogs), upload_to="profile_pics")
 
 	def __str__(self) -> str:
 		return f'{self.user.username} Profile'
+
