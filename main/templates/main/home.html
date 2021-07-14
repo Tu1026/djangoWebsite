@@ -1,5 +1,20 @@
 {% extends "main/base.html" %}
 {% block content %}
-	<h1>testing testing</h1>
-	<h2>asdasdasdasdasdasd</h2>
+
+<main role="main">
+
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <div class="container">
+          <h1 class="display-3">Hello Friend!</h1>
+          <p class="mb-4">Please check out the tutorial first to learn how to use the tools! You will need to <strong> (1) Be in the discord channel, (2) Have registered an account to be able to access the tools</strong></p>
+           <p><a class="btn btn-primary btn-lg float-left"  href="{% url 'tutorial' %}" role="button" >Tutorial »</a> 
+	       <a class="btn btn-primary btn-lg float-right" href="{% url 'register' %}" role="button">Register for an account »</a></p> 
+      </div>
+
+       <!-- /container -->
+
+    </main>
+
+
 {% endblock content %}
