@@ -23,6 +23,7 @@ def main(course, noti_email, url, seatType, username, password, TOKEN, uid):
     noti_email = str(noti_email)
     url = str(url)
     seatType = str(seatType)
+    uid = int(uid)
     print(noti_email)
     print(seatType)
     print(f"Start Traking {course}")
@@ -38,14 +39,15 @@ def main(course, noti_email, url, seatType, username, password, TOKEN, uid):
     general_selector, restricted_selector, = process_seat_type()
     
     def send_discord_message(word):
-        client = discord.Client()
+        intents = discord.Intents.all()
+        client = discord.Client(intents=intents)
         @client.event
         async def on_ready():
-            await client.get_channel(uid).send(f'Register for {word} RIGHT NOW!!!!!!!!!!!')
-            await client.get_channel(uid).send(f'Register for {word} RIGHT NOW!!!!!!!!!!!')
-            await client.get_channel(uid).send(f'Register for {word} RIGHT NOW!!!!!!!!!!!')
-            await client.get_channel(uid).send(f'Register for {word} RIGHT NOW!!!!!!!!!!!')
-            await client.get_channel(uid).send(f'Register for {word} RIGHT NOW!!!!!!!!!!!')
+            await client.get_user(uid).send(f'Register for {word} RIGHT NOW!!!!!!!!!!!')
+            await client.get_user(uid).send(f'Register for {word} RIGHT NOW!!!!!!!!!!!')
+            await client.get_user(uid).send(f'Register for {word} RIGHT NOW!!!!!!!!!!!')
+            await client.get_user(uid).send(f'Register for {word} RIGHT NOW!!!!!!!!!!!')
+            await client.get_user(uid).send(f'Register for {word} RIGHT NOW!!!!!!!!!!!')
             await client.close()
         
 
@@ -121,6 +123,7 @@ def main(course, noti_email, url, seatType, username, password, TOKEN, uid):
                     except AssertionError: 
                         try:
                             send_discord_message(course)
+                            print("discord done")
                             send_email(username, password)
                             print("email notificaiton sent")
                         except:

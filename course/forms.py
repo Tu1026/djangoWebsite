@@ -8,8 +8,8 @@ class CourseRegForm(ModelForm):
 		model= Course
 		exclude=['user']
   
-	def course_reg(self, course, email, url, number):
+	def course_reg(self, course, email, url, number, uid):
 		print(course, email, url, number)
 		id = course_reg_task.delay(
-      	course, email, url, number)
+      	course, email, url, number, uid)
 		print(id.task_id)
