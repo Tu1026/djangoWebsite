@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
+
 <head>
 
     <!-- Required meta tags -->
@@ -11,79 +12,105 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="{% static 'main/main.css' %}">
-        <title>Wilson and Friends</title>
+    <title>Wilson and Friends</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
 </head>
+
 <body>
     <header class="site-header">
-      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
-        <div class="container">
-          <a class="navbar-brand mr-4" href="/">WillyFriends</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarToggle">
-            <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link" href="{% url 'main-home' %}">Home</a>
-              <a class="nav-item nav-link" href="{% url 'tutorial' %}">Tutorial</a>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+            <div class="container">
+                <a class="navbar-brand ml-4" href="/">WillyFriends</a>
+                <div class="navbar-nav mr-auto">
+                    <div class="navbar-nav mr-auto">
+                        <li class="nav-item ">
+                            <a class="nav-link" href="{% url 'main-home' %}">Home</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{% url 'tutorial' %}">Tutorial</a>
+                        </li>
+                        {% if user.is_authenticated %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle active" href="../" id="dropdown08" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tools</a>
+                            <div class="dropdown-menu" aria-labelledby="dropdown08">
+                                <a class="dropdown-item" href="{% url 'course'%}">Course Tracking</a>
+                            </div>
+                        </li>
+                        {% else %} {% endif %}
+                    </div>
+                </div>
+                <div class="navbar-nav">
+                    <ul class="navbar-nav">
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item active">
+                            <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
             </div>
-            <!-- Navbar Right Side -->
-            <div class="navbar-nav">
-			{% if user.is_authenticated %}
-				<a class="nav-item nav-link" href="{% url 'profile' %}">profile</a>
-                      <a class="nav-item nav-link" href="{% url 'course' %}">Courses</a>
-              <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-			{% else %}
-              <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-              <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
-			{% endif %}
-            </div>
-          </div>
-        </div>
-      </nav>
+        </nav>
     </header>
     <main role="main" class="container">
-      <div class="row">
-        <div class="col-md-20">
-		{% if messages %}
-			{% for message in messages %}
-				<div class="alert alert-{{ message.tags }}">
-				{{ message }}
-				</div>
-			{% endfor %}
-		{% endif %}
-          {% block content %}{% endblock %}
-        </div>
-      </div>
-
-      <footer class="pt-4 my-md-5 pt-md-5 border-top">
         <div class="row">
-          <div class="col-6 col-md">
-            <h5>Source Code</h5>
-            <ul class="list-unstyled text-small">
-              <li><a class="text-muted" href="https://github.com/Tu1026/djangoWebsite">GitHub</a></li>
-
-            </ul>
-          </div>
-          <div class="col-6 col-md">
-            <h5>Keep the server running!</h5>
-            <ul class="list-unstyled text-small">
-              <li><a class="text-muted" href="#">Donation Link</a></li>
-            </ul>
-          </div>
-          <div class="col-6 col-md">
-            <h5>About</h5>
-            <ul class="list-unstyled text-small">
-              <li>Server Host: Digital Ocean</a></li>
-              <li>WebFrame Work: Django</a></li>
-              <li>Task Backend: Python + Celery</a></li>
-              <li>Notificiton: Gmail + Discord</a></li>
-            </ul>
-          </div>
+            <div class="col-md-20">
+                {% if messages %} {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+                {% endfor %} {% endif %} {% block content %}{% endblock %}
+            </div>
         </div>
-      </footer>
+
+        <footer class="pt-4 my-md-5 pt-md-5 border-top">
+            <div class="row">
+                <div class="col-6 col-md">
+                    <h5>Source Code</h5>
+                    <ul class="list-unstyled text-small">
+                        <li><a class="text-muted" href="https://github.com/Tu1026/djangoWebsite">GitHub</a></li>
+
+                    </ul>
+                </div>
+                <div class="col-6 col-md">
+                    <h5>Keep the server running!</h5>
+                    <ul class="list-unstyled text-small">
+                        <li><a class="text-muted" href="#">Donation Link</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md">
+                    <h5>About</h5>
+                    <ul class="list-unstyled text-small">
+                        <li>Server Host: Digital Ocean</a>
+                        </li>
+                        <li>WebFrame Work: Django</a>
+                        </li>
+                        <li>Task Backend: Python + Celery</a>
+                        </li>
+                        <li>Notificiton: Gmail + Discord</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
     </main>
 
-    
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -91,34 +118,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
+
 </html>
-
-
-
-{% comment %} <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample08">
-        <ul class="navbar-nav">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Centered nav only <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown08" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-            <div class="dropdown-menu" aria-labelledby="dropdown08">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </nav> {% endcomment %}
