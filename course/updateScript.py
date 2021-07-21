@@ -76,10 +76,10 @@ def main(course, noti_email, url, seatType, username, password, TOKEN, uid):
     
     def sleep_if_maintnence():
         if maintnence_time():
-            time = datetime.datetime.today()
+            curr_time = datetime.datetime.today()
             new_time = time.replace(hour=5, minute=30)
-            time.sleep((new_time - time).total_seconds())
-            print(f'sleeping right now till 4.20 AM for{new_time.total_seconds()} seconds to avoid scheduled maintenence')
+            time.sleep((new_time - curr_time).total_seconds())
+            print(f'sleeping right now till 4.20 AM for {(new_time - curr_time).total_seconds()} seconds to avoid scheduled maintenence')
             t = datetime.datetime.today()
             print(f'waking up at time {t}') 
 
