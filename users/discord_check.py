@@ -1,15 +1,17 @@
 import discord
-import os 
+import os
+import asyncio
 state = False
 id = 0                  
 def main(name, discrimnator):
-  
+    loop=asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
     uid = int(os.getenv("uid"))
     TOKEN = os.getenv("DISCORD_TOKEN")
     intents = discord.Intents.all()
     client = discord.Client(intents=intents)
-    
-    @client.event 
+
+    @client.event
     async def on_ready():
         guild = client.get_guild(uid)
         for member in guild.members:
@@ -22,9 +24,8 @@ def main(name, discrimnator):
                 print(f'id inside of on ready {id}')
                 await member.send("Thank you for registering! You have entered correct username")
         await client.close()
-        
-    client.run(TOKEN)    
-    
+    client.run(TOKEN)
+
     return state, id
     
 

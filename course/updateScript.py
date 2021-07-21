@@ -115,7 +115,7 @@ def main(course, noti_email, url, seatType, username, password, TOKEN, uid):
                 while True:
                     try:
                         sleep_if_maintnence()
-                        print("still no seats available")
+                        print(f"still no seats available for {course}")
                         general, restricted = check_seat_status(general, restricted, driver)
                         gc.collect()
                         print("sleeping to avoid bot detection")

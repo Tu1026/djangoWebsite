@@ -33,7 +33,7 @@ class UserProfileForm(forms.ModelForm):
 			future = executor.submit(check_valid_name, name_list[0], name_list[1])
 			state, id = future.result()
 			print(f'future result {state} {id}')
-		if not state:  # You create this function
+		if not state: 
 			raise ValidationError("Your discord name is not in the channel, have you joined the channel yet?")
 		return id
 
