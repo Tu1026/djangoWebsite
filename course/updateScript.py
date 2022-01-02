@@ -103,13 +103,17 @@ def main(course, noti_email, url, seatType, username, password, TOKEN, uid):
     
     def update_loop():
     ## Keeps looping through the website until a spot is open
-        options = Options()
-        options.headless = True
+        options =  webdriver.FirefoxOptions()
+        #options.binary_location = "/usr/bin/chromedriver"
+        options.add_argument('--headless')
+        options.add_argument("--disable-gpu")
+        options.add_argument('--disable-dev-shm-usage')
+        options.add_argument('--no-sandbox')
         options.add_argument("--enable-javascript")
         options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36")
         restricted = 0
         general = 0
-        with webdriver.Chrome(ChromeDriverManager().install(), options=options) as driver:
+        with webdriver.Firefox(options=options) as driver:
             try:
                 general, restricted = get_css_element(driver)
                 while True:
