@@ -16,10 +16,11 @@ gunicorn = "*"
 django-simple-captcha = "*"
 selenium = "*"
 webdriver-manager = "*"
+flower = "*"
 
 [dev-packages]
 pylint = "*"
 django-extensions = "*"
 
 [requires]
-python_version = "3.8"
+python_version = "3"
