@@ -57,25 +57,25 @@ def main(gym, url, TOKEN, uid):
         options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36")
         with webdriver.Firefox(options=options) as driver:
             print("did i even get here")
-            try:
-                status = get_css_element(driver)
-                print(status)
-                while True:
+            while True:
+                try:
+                    status = get_css_element(driver)
+                    print(status)
+                    assert status == "full"
+                    time.sleep(random.randint(10,20)) 
+                    print(f"No spots yet for {gym} sleeping to avoid detection")
+                except AssertionError: 
                     try:
-                        assert status == "full"
-                        time.sleep(random.randint(10,20)) 
-                    except AssertionError: 
-                        try:
-                            send_discord_message(gym)
-                            print("discord done")
-                        except:
-                            print("something went wrong with discord sending stuff")
-                        break
+                        send_discord_message(gym)
+                        print("discord done")
                     except:
-                        time.sleep(random.randint(10,20)) 
-                        continue
-            except:
-                send_discord_message(f'Something went wrong with the tracker for gym. Please let Wilson know')
+                        print("something went wrong with discord sending stuff")
+                        send_discord_message(f'Something went wrong with the tracker for gym. Please let Wilson know')
+                    break
+                except:
+                    time.sleep(random.randint(10,20)) 
+                    continue
+                
                 
     update_loop()
 
