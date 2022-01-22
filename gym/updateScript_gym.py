@@ -58,6 +58,7 @@ def main(gym, url, TOKEN, uid):
         with webdriver.Firefox(options=options) as driver:
             try:
                 status = get_css_element(driver)
+                print(status)
                 while True:
                     try:
                         assert status == "full"
@@ -67,7 +68,7 @@ def main(gym, url, TOKEN, uid):
                             send_discord_message(gym)
                             print("discord done")
                         except:
-                            print("something went wrong with emailing stuff or FB stuff")
+                            print("something went wrong with discord sending stuff")
                         break
                     except:
                         time.sleep(random.randint(10,20)) 

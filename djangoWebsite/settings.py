@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'course.apps.CourseConfig',
+    'gym.apps.GymConfig',
     "captcha",
-    "gym"
 ]
 
 if DEBUG:
