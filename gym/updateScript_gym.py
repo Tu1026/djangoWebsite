@@ -42,7 +42,7 @@ def main(gym, url, TOKEN, uid):
         
     def get_css_element(driver):
         driver.get(url)
-        return (driver.find_element(By.CSS_SELECTOR, ".spots > span").text).lower()
+        return driver.find_element(By.CSS_SELECTOR, ".spots > span").text.lower()
     
     
     def update_loop():
@@ -56,6 +56,7 @@ def main(gym, url, TOKEN, uid):
         options.add_argument("--enable-javascript")
         options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36")
         with webdriver.Firefox(options=options) as driver:
+            print("did i even get here")
             try:
                 status = get_css_element(driver)
                 print(status)
